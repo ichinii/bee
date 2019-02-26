@@ -1,4 +1,9 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/InputManager.tscn" type="PackedScene" id=1]
 
 [node name="Main" type="Node2D"]
 
+[node name="InputManager" parent="." instance=ExtResource( 1 )]
+
+[connection signal="gui_input" from="InputManager" to="InputManager" method="_on_InputManager_gui_input"]
