@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://res/comb2_placeholder.png" type="Texture" id=1]
+
+[node name="PlaceholderComb" type="Node2D"]
+
+[node name="CombSprite" type="Sprite" parent="."]
+position = Vector2( -700, -230 )
+texture = ExtResource( 1 )
+offset = Vector2( 700, 230 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( -97.2345, -60.6178, -0.375122, -104.404, 95.1574, -61.9447, 95.8209, 58.7979, 2.27856, 104.574, -97.2345, 60.1247 )
+
