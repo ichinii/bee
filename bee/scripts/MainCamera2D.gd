@@ -72,7 +72,7 @@ func _unhandled_input(event):
 	
 	# get_node("Label").text = str(contact_list.size())
 	
-	if _is_scrolling():
+	if _is_scrolling() or not mobile:
 		_scroll(event)
 	if _is_zooming():
 		_zoom(event)

@@ -6,11 +6,8 @@
 [node name="Main" type="Node2D"]
 
 [node name="Bee" parent="." instance=ExtResource( 1 )]
-position = Vector2( 832.9, 418.227 )
-
-[node name="Bee2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 330.138, 252.217 )
+position = Vector2( 227.923, 203.619 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 2.05054, 3.05176e-05 )
+position = Vector2( 512, 300 )
 
