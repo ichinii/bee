@@ -9,5 +9,4 @@
 position = Vector2( 227.923, 203.619 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 512, 300 )
 

@@ -3,8 +3,16 @@ extends Camera2D
 const MIN_ZOOM = 0.1
 const MAX_ZOOM = 2.0
 
+const MAX_X_SCROLL = 200
+const MIN_X_SCROLL = -200
+const MAX_Y_SCROLL = 200
+const MIN_Y_SCROLL = -200
+
+const SCROLL_UPDATE = 0.5
+
 var mobile = false
 var zoom_value = 1.0
+var scroll_position = self.offset
 
 class Contact:
 	var index
@@ -13,7 +21,7 @@ class Contact:
 	func _init(index, position):
 		self.index = index
 		self.position = position
-	
+
 	func as_text():
 		return "Contact(index=" + str(index) + " position=" + str(position) + ")"
 
@@ -31,10 +39,10 @@ func _scroll(event):
 		zfactor = 0.5
 	if mobile:
 		if event is InputEventScreenDrag:
-			self.offset -= event.relative * self.zoom.x * zfactor
+			self.scroll_position -= event.relative * self.zoom_value * zfactor
 	else:
 		if event is InputEventMouseMotion and event.button_mask != 0:
-			self.offset -= event.relative * self.zoom.x * zfactor
+			self.scroll_position -= event.relative * self.zoom_value * zfactor
 
 func _zoom(event):
 	if event is InputEventScreenDrag:
@@ -74,9 +82,9 @@ func _unhandled_input(event):
 		mobile = true
 
 	_manage_contact_list(event)
-	
+
 	# get_node("Label").text = str(contact_list.size())
-	
+
 	if _is_scrolling() or not mobile:
 		_scroll(event)
 	if _is_zooming():
@@ -92,15 +100,54 @@ func _zoom_back():
 		if zoom_value < MAX_ZOOM:
 			zoom_value = MAX_ZOOM
 
+func _scroll_back():
+	if scroll_position.x < MIN_X_SCROLL:
+		scroll_position.x += (MIN_X_SCROLL-scroll_position.x + 0.5)*SCROLL_UPDATE
+		if scroll_position.x > MIN_X_SCROLL:
+			scroll_position.x = MIN_X_SCROLL
+	elif scroll_position.x > MAX_X_SCROLL:
+		scroll_position.x -= (scroll_position.x-MAX_X_SCROLL + 0.5)*SCROLL_UPDATE
+		if scroll_position.x < MAX_X_SCROLL:
+			scroll_position.x = MAX_X_SCROLL
+
+	if scroll_position.y < MIN_Y_SCROLL:
+		scroll_position.y += (MIN_Y_SCROLL-scroll_position.y + 0.5)*SCROLL_UPDATE
+		if scroll_position.y > MIN_Y_SCROLL:
+			scroll_position.y = MIN_Y_SCROLL
+	elif scroll_position.y > MAX_Y_SCROLL:
+		scroll_position.y -= (scroll_position.y-MAX_Y_SCROLL + 0.5)*SCROLL_UPDATE
+		if scroll_position.y < MAX_Y_SCROLL:
+			scroll_position.y = MAX_Y_SCROLL
+
 func _process(delta):
 	if not _is_zooming():
 		_zoom_back()
+
+	if not _is_scrolling():
+		_scroll_back()
 
 	var view_zoom = _zoom_smoother(self.zoom_value)
 	self.zoom.x = view_zoom
 	self.zoom.y = view_zoom
 
+	var view_scroll = _scroll_smoother(self.scroll_position)
+	self.offset = view_scroll
+
 	get_node("Label").text = str(view_zoom)
+
+func _scroll_smoother(s):
+	var r = s
+	if s.x > MAX_X_SCROLL:
+		r.x = MAX_X_SCROLL + _smooth_func(s.x-MAX_X_SCROLL, 7)
+	elif s.x < MIN_X_SCROLL:
+		r.x = MIN_X_SCROLL - _smooth_func(MIN_X_SCROLL-s.x, 7)
+
+	if s.y > MAX_Y_SCROLL:
+		r.y = MAX_Y_SCROLL + _smooth_func(s.y-MAX_Y_SCROLL, 7)
+	elif s.y < MIN_Y_SCROLL:
+		r.y = MIN_Y_SCROLL - _smooth_func(MIN_Y_SCROLL-s.y, 7)
+
+	return r
 
 func _zoom_smoother(z):
 	var r = z
