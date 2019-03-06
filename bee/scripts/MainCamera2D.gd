@@ -44,6 +44,9 @@ func _scroll(event):
 		if event is InputEventMouseMotion and event.button_mask != 0:
 			self.scroll_position -= event.relative * self.zoom_value * zfactor
 
+	var view_scroll = _scroll_smoother(self.scroll_position)
+	self.offset = view_scroll
+
 func _zoom(event):
 	if event is InputEventScreenDrag:
 		var updated_contact = null
@@ -60,6 +63,10 @@ func _zoom(event):
 		
 		var zoom_factor = new_diff.length() / old_diff.length()
 		self.zoom_value *= zoom_factor
+
+		var view_zoom = _zoom_smoother(self.zoom_value)
+		self.zoom.x = view_zoom
+		self.zoom.y = view_zoom
 
 func _manage_contact_list(event):
 	if event is InputEventScreenTouch:
@@ -102,20 +109,20 @@ func _zoom_back():
 
 func _scroll_back():
 	if scroll_position.x < MIN_X_SCROLL:
-		scroll_position.x += (MIN_X_SCROLL-scroll_position.x + 0.5)*SCROLL_UPDATE
+		scroll_position.x += (MIN_X_SCROLL-scroll_position.x + 0.3)*SCROLL_UPDATE
 		if scroll_position.x > MIN_X_SCROLL:
 			scroll_position.x = MIN_X_SCROLL
 	elif scroll_position.x > MAX_X_SCROLL:
-		scroll_position.x -= (scroll_position.x-MAX_X_SCROLL + 0.5)*SCROLL_UPDATE
+		scroll_position.x -= (scroll_position.x-MAX_X_SCROLL + 0.3)*SCROLL_UPDATE
 		if scroll_position.x < MAX_X_SCROLL:
 			scroll_position.x = MAX_X_SCROLL
 
 	if scroll_position.y < MIN_Y_SCROLL:
-		scroll_position.y += (MIN_Y_SCROLL-scroll_position.y + 0.5)*SCROLL_UPDATE
+		scroll_position.y += (MIN_Y_SCROLL-scroll_position.y + 0.3)*SCROLL_UPDATE
 		if scroll_position.y > MIN_Y_SCROLL:
 			scroll_position.y = MIN_Y_SCROLL
 	elif scroll_position.y > MAX_Y_SCROLL:
-		scroll_position.y -= (scroll_position.y-MAX_Y_SCROLL + 0.5)*SCROLL_UPDATE
+		scroll_position.y -= (scroll_position.y-MAX_Y_SCROLL + 0.3)*SCROLL_UPDATE
 		if scroll_position.y < MAX_Y_SCROLL:
 			scroll_position.y = MAX_Y_SCROLL
 
@@ -125,7 +132,7 @@ func _process(delta):
 
 	if not _is_scrolling():
 		_scroll_back()
-
+		
 	var view_zoom = _zoom_smoother(self.zoom_value)
 	self.zoom.x = view_zoom
 	self.zoom.y = view_zoom
@@ -133,19 +140,19 @@ func _process(delta):
 	var view_scroll = _scroll_smoother(self.scroll_position)
 	self.offset = view_scroll
 
-	get_node("Label").text = str(view_zoom)
+	get_node("Label").text = str(zoom_value)
 
 func _scroll_smoother(s):
 	var r = s
 	if s.x > MAX_X_SCROLL:
-		r.x = MAX_X_SCROLL + _smooth_func(s.x-MAX_X_SCROLL, 7)
+		r.x = MAX_X_SCROLL + _smooth_func(s.x-MAX_X_SCROLL, 5*(zoom_value+0.5))
 	elif s.x < MIN_X_SCROLL:
-		r.x = MIN_X_SCROLL - _smooth_func(MIN_X_SCROLL-s.x, 7)
+		r.x = MIN_X_SCROLL - _smooth_func(MIN_X_SCROLL-s.x, 5*(zoom_value+0.5))
 
 	if s.y > MAX_Y_SCROLL:
-		r.y = MAX_Y_SCROLL + _smooth_func(s.y-MAX_Y_SCROLL, 7)
+		r.y = MAX_Y_SCROLL + _smooth_func(s.y-MAX_Y_SCROLL, 5*(zoom_value+0.5))
 	elif s.y < MIN_Y_SCROLL:
-		r.y = MIN_Y_SCROLL - _smooth_func(MIN_Y_SCROLL-s.y, 7)
+		r.y = MIN_Y_SCROLL - _smooth_func(MIN_Y_SCROLL-s.y, 5*(zoom_value+0.5))
 
 	return r
 
