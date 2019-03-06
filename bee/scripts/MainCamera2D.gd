@@ -1,6 +1,10 @@
 extends Camera2D
 
+const MIN_ZOOM = 0.1
+const MAX_ZOOM = 2.0
+
 var mobile = false
+var zoom_value = 1.0
 
 class Contact:
 	var index
@@ -22,12 +26,15 @@ func _is_zooming():
 	return contact_list.size() == 2
 
 func _scroll(event):
+	var zfactor = 1.0
+	if _is_zooming():
+		zfactor = 0.5
 	if mobile:
 		if event is InputEventScreenDrag:
-			self.offset -= event.relative * self.zoom.x
+			self.offset -= event.relative * self.zoom.x * zfactor
 	else:
 		if event is InputEventMouseMotion and event.button_mask != 0:
-			self.offset -= event.relative * self.zoom.x
+			self.offset -= event.relative * self.zoom.x * zfactor
 
 func _zoom(event):
 	if event is InputEventScreenDrag:
@@ -44,9 +51,7 @@ func _zoom(event):
 		var new_diff = updated_contact.position - unchanged_contact.position
 		
 		var zoom_factor = new_diff.length() / old_diff.length()
-		self.zoom.x *= zoom_factor
-		self.zoom.y *= zoom_factor
-		get_node("Label").text = str(self.zoom.x)
+		self.zoom_value *= zoom_factor
 
 func _manage_contact_list(event):
 	if event is InputEventScreenTouch:
@@ -76,3 +81,34 @@ func _unhandled_input(event):
 		_scroll(event)
 	if _is_zooming():
 		_zoom(event)
+
+func _zoom_back():
+	if zoom_value < MIN_ZOOM:
+		zoom_value += (MIN_ZOOM-zoom_value + 0.003)*0.2
+		if zoom_value > MIN_ZOOM:
+			zoom_value = MIN_ZOOM
+	elif zoom_value > MAX_ZOOM:
+		zoom_value -= (zoom_value-MAX_ZOOM + 0.003)*0.4
+		if zoom_value < MAX_ZOOM:
+			zoom_value = MAX_ZOOM
+
+func _process(delta):
+	if not _is_zooming():
+		_zoom_back()
+
+	var view_zoom = _zoom_smoother(self.zoom_value)
+	self.zoom.x = view_zoom
+	self.zoom.y = view_zoom
+
+	get_node("Label").text = str(view_zoom)
+
+func _zoom_smoother(z):
+	var r = z
+	if z > MAX_ZOOM:
+		r = MAX_ZOOM + _smooth_func(z-MAX_ZOOM, 0.3)
+	elif z < MIN_ZOOM:
+		r = MIN_ZOOM - _smooth_func(MIN_ZOOM-z, 0.015)
+	return r
+
+func _smooth_func(x, h):
+	return x*h/(x+h)
