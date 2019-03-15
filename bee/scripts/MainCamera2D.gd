@@ -67,6 +67,11 @@ func _zoom(event):
 		var view_zoom = _zoom_smoother(self.zoom_value)
 		self.zoom.x = view_zoom
 		self.zoom.y = view_zoom
+	elif (not self.mobile) and (event is InputEventMouseButton):
+		if event.button_index == BUTTON_WHEEL_UP:
+			self.zoom_value -= 0.02
+		elif event.button_index == BUTTON_WHEEL_DOWN:
+			self.zoom_value += 0.02
 
 func _manage_contact_list(event):
 	if event is InputEventScreenTouch:
@@ -94,7 +99,7 @@ func _unhandled_input(event):
 
 	if _is_scrolling() or not mobile:
 		_scroll(event)
-	if _is_zooming():
+	if _is_zooming() or not mobile:
 		_zoom(event)
 
 func _zoom_back():
