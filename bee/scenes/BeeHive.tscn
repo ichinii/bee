@@ -1,65 +1,44 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/BeeHive.gd" type="Script" id=1]
 [ext_resource path="res://res/hive2_open.png" type="Texture" id=2]
 [ext_resource path="res://res/hive2.png" type="Texture" id=3]
-[ext_resource path="res://scenes/BeeComb.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/CombPlaceArea.gd" type="Script" id=4]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 28.903, 1310.2 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 31.5403, 1309.13 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 1509, 33.3994 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 859.467, 34.3838 )
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 440.544, 214.915 )
 
 [node name="BeeHive" type="Node2D"]
-position = Vector2( 540, 960 )
-scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 
 [node name="TransitionTween" type="Tween" parent="."]
 
 [node name="HiveOpenSprite" type="Sprite" parent="."]
-position = Vector2( 0, -1.85327 )
+position = Vector2( 540, 960 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 2 )
 
 [node name="HiveSprite" type="Sprite" parent="."]
-position = Vector2( 0, -1.85327 )
+position = Vector2( 540, 960 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
-[node name="InitialComb" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1373.27, -1148 )
+[node name="CombPlaceArea" type="Area2D" parent="."]
+script = ExtResource( 4 )
 
-[node name="HiveBorders" type="Area2D" parent="."]
-editor/display_folded = true
+[node name="PlaceShape" type="CollisionPolygon2D" parent="CombPlaceArea"]
+position = Vector2( 402.571, 1157.39 )
+scale = Vector2( 0.421889, 0.396516 )
+polygon = PoolVector2Array( -1.10791, 131.072, 1391.3, 131.072, 1405.36, -1176.95, 19.9888, -1845.02 )
 
-[node name="Right" type="CollisionShape2D" parent="HiveBorders"]
-position = Vector2( 1519.87, 73.7512 )
-shape = SubResource( 2 )
+[node name="StartPosition" type="Position2D" parent="CombPlaceArea"]
+position = Vector2( 846.408, 727.931 )
 
-[node name="Left" type="CollisionShape2D" parent="HiveBorders"]
-position = Vector2( -1533.41, 64.0654 )
-rotation = 0.00872665
-shape = SubResource( 3 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombPlaceArea"]
+position = Vector2( 510, 778 )
+scale = Vector2( 100, 100 )
+shape = SubResource( 1 )
 
-[node name="Bottom" type="CollisionShape2D" parent="HiveBorders"]
-position = Vector2( -12.0002, 1352.8 )
-rotation = 0.00872665
-shape = SubResource( 4 )
-
-[node name="TopRight" type="CollisionShape2D" parent="HiveBorders"]
-position = Vector2( 794.043, -1606.95 )
-rotation = 0.462512
-shape = SubResource( 5 )
-
-[node name="TopLeft" type="CollisionShape2D" parent="HiveBorders"]
-position = Vector2( -731.853, -1625.52 )
-rotation = 2.68781
-shape = SubResource( 5 )
+[node name="Position2D" type="Position2D" parent="."]
 
 [connection signal="tween_completed" from="TransitionTween" to="." method="_on_TransitionTween_tween_completed"]
