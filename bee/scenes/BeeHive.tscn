@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/BeeHive.gd" type="Script" id=1]
 [ext_resource path="res://res/hive2_open.png" type="Texture" id=2]
 [ext_resource path="res://res/hive2.png" type="Texture" id=3]
 [ext_resource path="res://scenes/CombPlaceArea.gd" type="Script" id=4]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 440.544, 214.915 )
 
 [node name="BeeHive" type="Node2D"]
 script = ExtResource( 1 )
@@ -27,17 +24,12 @@ texture = ExtResource( 3 )
 script = ExtResource( 4 )
 
 [node name="PlaceShape" type="CollisionPolygon2D" parent="CombPlaceArea"]
-position = Vector2( 402.571, 1157.39 )
-scale = Vector2( 0.421889, 0.396516 )
-polygon = PoolVector2Array( -1.10791, 131.072, 1391.3, 131.072, 1405.36, -1176.95, 19.9888, -1845.02 )
+position = Vector2( 375.145, 1157.39 )
+scale = Vector2( 0.357059, 0.396516 )
+polygon = PoolVector2Array( 476.108, -646.515, 1401.48, -637.295, 1405.36, -1176.95, 479.547, -1584.7 )
 
 [node name="StartPosition" type="Position2D" parent="CombPlaceArea"]
 position = Vector2( 846.408, 727.931 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CombPlaceArea"]
-position = Vector2( 510, 778 )
-scale = Vector2( 100, 100 )
-shape = SubResource( 1 )
 
 [node name="Position2D" type="Position2D" parent="."]
 

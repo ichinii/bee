@@ -2,7 +2,7 @@ extends Area2D
 # comblicat
 # comb post
 
-var comb_size = Vector2(200, 350)
+var comb_size = Vector2(200, 350) * 0.25
 var combs = {}
 var comb_scene = preload("res://scenes/Comb.tscn")
 
@@ -55,9 +55,13 @@ func get_neighbors(coord: Vector2):
 func is_comb_placeable(coord: Vector2) -> bool:
 	var pos = coord_to_pos(coord)
 	
-	var arr = get_world_2d().direct_space_state.intersect_point(position)
-	#print(arr)
-	return arr.has(self)
+	var arr = get_world_2d().get_direct_space_state().intersect_point(pos, 32, [], 2147483647, true, true)
+	for a in arr:
+		if a.collider.name == name:
+			print(arr)
+			return true
+	return false
+	
 
 func coord_to_pos(coord: Vector2) -> Vector2:
 	return coord * comb_size + $StartPosition.position
