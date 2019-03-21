@@ -86,6 +86,6 @@ func coord_to_pos(coord: Vector2) -> Vector2:
 func compare_vector2(v1: Vector2, v2: Vector2) -> bool:
 	return v1.length_squared() < v2.length_squared()
 	
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		print(place_new_comb())
+#func _input(event: InputEvent) -> void:
+#	if event.is_action_pressed("ui_accept"):
+#		print(place_new_comb())

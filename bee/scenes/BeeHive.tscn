@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/BeeHive.gd" type="Script" id=1]
+[ext_resource path="res://scripts/BeeHive.gd" type="Script" id=1]
 [ext_resource path="res://res/hive2_open.png" type="Texture" id=2]
 [ext_resource path="res://res/hive2.png" type="Texture" id=3]
-[ext_resource path="res://scenes/CombPlaceArea.gd" type="Script" id=4]
+[ext_resource path="res://scripts/CombPlaceArea.gd" type="Script" id=4]
 
 [node name="BeeHive" type="Node2D"]
 script = ExtResource( 1 )
