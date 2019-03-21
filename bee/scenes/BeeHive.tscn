@@ -20,17 +20,27 @@ position = Vector2( 540, 960 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
-[node name="CombPlaceArea" type="Area2D" parent="."]
+[node name="HoneyCombPlaceArea" type="Area2D" parent="."]
+editor/display_folded = true
 script = ExtResource( 4 )
 
-[node name="PlaceShape" type="CollisionPolygon2D" parent="CombPlaceArea"]
+[node name="PlaceShape" type="CollisionPolygon2D" parent="HoneyCombPlaceArea"]
 position = Vector2( 375.145, 1157.39 )
 scale = Vector2( 0.357059, 0.396516 )
-polygon = PoolVector2Array( 476.108, -646.515, 1401.48, -637.295, 1405.36, -1176.95, 479.547, -1584.7 )
+polygon = PoolVector2Array( 480.242, -637.475, 1401.48, -637.295, 1405.36, -1176.95, 480.542, -1579.6 )
 
-[node name="StartPosition" type="Position2D" parent="CombPlaceArea"]
+[node name="StartingPosition" type="Position2D" parent="HoneyCombPlaceArea"]
 position = Vector2( 846.408, 727.931 )
 
-[node name="Position2D" type="Position2D" parent="."]
+[node name="BeeCombPlaceArea" type="Area2D" parent="."]
+editor/display_folded = true
+script = ExtResource( 4 )
+
+[node name="PlaceShape" type="CollisionPolygon2D" parent="BeeCombPlaceArea"]
+position = Vector2( 0.568848, 0 )
+polygon = PoolVector2Array( 213.669, 909.904, 206.494, 1254.3, 605.481, 1254.11, 406.771, 909.709 )
+
+[node name="StartingPosition" type="Position2D" parent="BeeCombPlaceArea"]
+position = Vector2( 249.955, 1206.71 )
 
 [connection signal="tween_completed" from="TransitionTween" to="." method="_on_TransitionTween_tween_completed"]

@@ -3,7 +3,6 @@
 [ext_resource path="res://res/comb2_cell.png" type="Texture" id=1]
 
 [node name="Comb" type="Node2D"]
-scale = Vector2( 0.25, 0.25 )
 
 [node name="comb2_cell" type="Sprite" parent="."]
 texture = ExtResource( 1 )
