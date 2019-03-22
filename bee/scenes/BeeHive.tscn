@@ -21,8 +21,8 @@ scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
 [node name="HoneyCombPlaceArea" type="Area2D" parent="."]
-editor/display_folded = true
 script = ExtResource( 4 )
+comb_type = 1
 
 [node name="PlaceShape" type="CollisionPolygon2D" parent="HoneyCombPlaceArea"]
 position = Vector2( 375.145, 1157.39 )

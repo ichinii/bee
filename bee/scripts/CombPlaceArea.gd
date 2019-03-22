@@ -9,8 +9,10 @@ const layer_mask: int = 0x7FFFFFFF
 const collide_with_bodies: bool = true
 const collide_with_areas: bool = true
 
-const comb_scene = preload("res://scenes/Comb.tscn")
 export(Vector2) var comb_scale = Vector2(0.25, 0.25)
+const comb_scene = preload("res://scenes/Comb.tscn")
+const comb_script = preload("res://scripts/Comb.gd")
+export(comb_script.CombType) var comb_type
 
 var comb_size = Vector2(200, 350)
 var combs: Dictionary
@@ -40,6 +42,7 @@ func create_comb(coord: Vector2) -> void:
 	var comb = comb_scene.instance()
 	comb.scale = comb_scale
 	comb.position = comb_pos
+	comb.comb_type = comb_type
 	
 	combs[coord] = comb
 	add_child(comb)
