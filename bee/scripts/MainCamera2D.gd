@@ -1,18 +1,18 @@
 extends Camera2D
 
-const MIN_ZOOM = 0.1
-const MAX_ZOOM = 2.0
+const MIN_ZOOM: float = 0.1
+const MAX_ZOOM: float = 2.0
 
-const MAX_X_SCROLL = 200
-const MIN_X_SCROLL = -200
-const MAX_Y_SCROLL = 200
-const MIN_Y_SCROLL = -200
+const MAX_X_SCROLL: int = 200
+const MIN_X_SCROLL: int = -200
+const MAX_Y_SCROLL: int = 200
+const MIN_Y_SCROLL: int = -200
 
-const SCROLL_UPDATE = 0.5
+const SCROLL_UPDATE: float = 0.5
 
-var mobile = false
-var zoom_value = 1.0
-var scroll_position = self.offset
+var mobile: bool = false
+var zoom_value: float = 1.0
+var scroll_position: Vector2 = self.offset
 
 class Contact:
 	var index
