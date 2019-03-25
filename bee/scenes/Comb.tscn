@@ -1,11 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/Comb.gd" type="Script" id=1]
-[ext_resource path="res://res/comb2_cell.png" type="Texture" id=2]
+[ext_resource path="res://res/comb2_cell_honey1.png" type="Texture" id=2]
+[ext_resource path="res://res/comb2_cell_honey2.png" type="Texture" id=3]
+[ext_resource path="res://res/comb2_cell_honey3.png" type="Texture" id=4]
+[ext_resource path="res://res/comb2_cell_honey4.png" type="Texture" id=5]
+[ext_resource path="res://res/comb2_cell_honey5.png" type="Texture" id=6]
+[ext_resource path="res://res/comb2_cell_honey6.png" type="Texture" id=7]
+[ext_resource path="res://res/comb2_cell_bee1.png" type="Texture" id=8]
+[ext_resource path="res://res/comb2_cell_bee2.png" type="Texture" id=9]
+[ext_resource path="res://res/comb2_cell_bee3.png" type="Texture" id=10]
+[ext_resource path="res://res/comb2_cell_bee4.png" type="Texture" id=11]
+[ext_resource path="res://res/comb2_cell_bee5.png" type="Texture" id=12]
+[ext_resource path="res://res/comb2_cell_bee6.png" type="Texture" id=13]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "honey",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "bee",
+"speed": 5.0
+} ]
 
 [node name="Comb" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="comb2_cell" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "honey"
 
+[node name="EvolutionTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="EvolutionTimer" to="." method="_on_EvolutionTimer_timeout"]
