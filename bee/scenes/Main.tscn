@@ -1,8 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/Bee.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/MainCamera2D.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/UiController.tscn" type="PackedScene" id=3]
 
 [node name="Main" type="Node2D"]
 
 [node name="Bee" parent="." instance=ExtResource( 1 )]
+position = Vector2( 227.923, 203.619 )
 
+[node name="Camera2D" parent="." instance=ExtResource( 2 )]
+
+[node name="UiController" parent="." instance=ExtResource( 3 )]
+
+[connection signal="scrolled" from="Camera2D" to="UiController" method="_on_Camera2D_scrolled"]
+[connection signal="zoomed" from="Camera2D" to="UiController" method="_on_Camera2D_zoomed"]
+[connection signal="gui_input" from="UiController" to="UiController" method="_on_InputManager_gui_input"]
