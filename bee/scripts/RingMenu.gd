@@ -1,19 +1,22 @@
 extends Node2D
 
 enum Option {
-	SomeOption,
-	AnotherOption
+	NoneOption,
+	SomeOption
 }
 
 func _ready():
 	pass
 
 func init(producer, pos, options):
-	print("init RingMenu with options = ", options)
+	print_debug("init RingMenu with options = ", options)
 	var ring_menu_option_scene = preload("res://scenes/RingMenuOption.tscn")
-	var ring_menu_option = ring_menu_option_scene.instance()
-	var option = Option.AnotherOption
-	if options.size() > 0:
-		option = Option.SomeOption
-	ring_menu_option.init(producer, pos, option)
-	add_child(ring_menu_option)
+	for i in range(len(options)):
+		var option_instance = ring_menu_option_scene.instance()
+		option_instance.init(producer, pos + position_of_option(i, len(options)), options[i])
+		add_child(option_instance)
+
+func position_of_option(index: float, size):
+	var r = 32
+	var i = index / size * PI * 2 - PI / 2
+	return r * Vector2(cos(i), sin(i))

@@ -1,7 +1,7 @@
 extends Node2D
 
 enum Option {
-	NoneOption
+	NoneOption,
 	SomeOption
 }
 
@@ -31,3 +31,7 @@ func _init_area():
 	area.position = position
 	area.scale = Vector2(1, 1)
 	add_child(area)
+	connect("input_event", area, "clicked")
+
+func clicked(event):
+	print("option with id = ", option, " clicked. event = ", event)

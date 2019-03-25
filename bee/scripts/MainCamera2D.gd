@@ -14,6 +14,12 @@ var mobile: bool = false
 var zoom_value: float = 1.0
 var scroll_position: Vector2 = self.offset
 
+func _camera2world(xy: Vector2):
+	return xy + scroll_position #TODO: respect center offset and zoom
+
+func _world2camera(xy: Vector2):
+	return xy - scroll_position #TODO: respect center offset and zoom
+
 class Contact:
 	var index
 	var position

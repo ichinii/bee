@@ -9,8 +9,8 @@ func _input(event):
 	if event is InputEventMouseButton \
 			and event.button_index == BUTTON_LEFT \
 			and event.is_pressed():
-		#closeActiveMenu()
-		createRingMenu(self, event.position / 2, [])
+		var position = $"/root/Main/Camera2D"._camera2world(event.position) / 2 #TODO: why '/2'  ?
+		createRingMenu(self, position, [0, 0, 0, 0, 0, 0])
 
 func closeActiveMenu():
 	if activeMenu:
