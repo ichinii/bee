@@ -30,9 +30,7 @@ func createRingMenu(producer, pos, options):
 	add_child(ring_menu)
 
 func _on_Camera2D_scrolled():
-	print("scrolled")
 	closeActiveMenu()
 
 func _on_Camera2D_zoomed():
-	print("zoomed")
 	closeActiveMenu()
