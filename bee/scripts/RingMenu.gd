@@ -9,7 +9,7 @@ func _ready():
 	pass
 
 func init(producer, pos, options):
-	print_debug("init RingMenu with options = ", options)
+	print("init RingMenu with options = ", options)
 	var ring_menu_option_scene = preload("res://scenes/RingMenuOption.tscn")
 	for i in range(len(options)):
 		var option_instance = ring_menu_option_scene.instance()

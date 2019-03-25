@@ -14,11 +14,14 @@ var mobile: bool = false
 var zoom_value: float = 1.0
 var scroll_position: Vector2 = self.offset
 
-func _camera2world(xy: Vector2):
-	return xy + scroll_position #TODO: respect center offset and zoom
+signal scrolled()
+signal zoomed()
 
-func _world2camera(xy: Vector2):
-	return xy - scroll_position #TODO: respect center offset and zoom
+func _camera2world(xy: Vector2):
+	return xy
+	- get_viewport_rect().size / 2 # respect centered camera
+	+ scroll_position # respect scroll
+	+ (xy - get_viewport_rect().size / 2) * (zoom_value - 1) # respect zoom
 
 class Contact:
 	var index
@@ -51,7 +54,9 @@ func _scroll(event):
 			self.scroll_position -= event.relative * self.zoom_value * zfactor
 
 	var view_scroll = _scroll_smoother(self.scroll_position)
-	self.offset = view_scroll
+	if self.offset != view_scroll:
+		self.offset = view_scroll
+		emit_signal("scrolled")
 
 func _zoom(event):
 	if event is InputEventScreenDrag:
@@ -73,11 +78,14 @@ func _zoom(event):
 		var view_zoom = _zoom_smoother(self.zoom_value)
 		self.zoom.x = view_zoom
 		self.zoom.y = view_zoom
+		emit_signal("zoomed")
 	elif (not self.mobile) and (event is InputEventMouseButton):
 		if event.button_index == BUTTON_WHEEL_UP:
 			self.zoom_value -= 0.02
+			emit_signal("zoomed")
 		elif event.button_index == BUTTON_WHEEL_DOWN:
 			self.zoom_value += 0.02
+			emit_signal("zoomed")
 
 func _manage_contact_list(event):
 	if event is InputEventScreenTouch:

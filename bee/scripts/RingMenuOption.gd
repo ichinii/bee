@@ -12,7 +12,7 @@ func _ready():
 	pass
 
 func init(producer, pos, option):
-	print_debug("init RingMenuOption with option = ", option)
+	print("init RingMenuOption with option = ", option)
 	self.producer = producer
 	self.option = option
 	self.position = pos
