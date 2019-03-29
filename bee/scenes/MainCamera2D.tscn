@@ -6,9 +6,3 @@
 current = true
 script = ExtResource( 1 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = 23.8001
-margin_top = 22.2138
-margin_right = 63.8001
-margin_bottom = 36.2138
-

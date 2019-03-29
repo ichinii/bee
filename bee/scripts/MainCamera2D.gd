@@ -109,8 +109,6 @@ func _unhandled_input(event):
 
 	_manage_contact_list(event)
 
-	# get_node("Label").text = str(contact_list.size())
-
 	if _is_scrolling() or not mobile:
 		_scroll(event)
 	if _is_zooming() or not mobile:
@@ -158,8 +156,6 @@ func _process(delta):
 
 	var view_scroll = _scroll_smoother(self.scroll_position)
 	self.offset = view_scroll
-
-	get_node("Label").text = str(zoom_value)
 
 func _scroll_smoother(s):
 	var r = s
