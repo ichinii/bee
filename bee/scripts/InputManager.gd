@@ -15,14 +15,14 @@ func _input(event):
 
 func closeActiveMenu():
 	if activeMenu:
-		print("close active menu")
+		# print("close active menu")
 		activeMenu.free()
 		activeMenu = null
 		return true
 	return false
 
 func createRingMenu(producer, pos, options):
-	print("create RingMenu with options = ", options)
+	# print("create RingMenu with options = ", options)
 	var ring_menu_scene = preload("res://scenes/RingMenu.tscn")
 	var ring_menu = ring_menu_scene.instance()
 	ring_menu.init(producer, pos, options)

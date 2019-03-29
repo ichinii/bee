@@ -3,10 +3,10 @@ extends Camera2D
 const MIN_ZOOM: float = 0.1
 const MAX_ZOOM: float = 2.0
 
-const MAX_X_SCROLL: int = 540
-const MIN_X_SCROLL: int = 540
-const MAX_Y_SCROLL: int = 960
-const MIN_Y_SCROLL: int = 960
+const MAX_X_SCROLL: int = 900
+const MIN_X_SCROLL: int = 170
+const MAX_Y_SCROLL: int = 1270
+const MIN_Y_SCROLL: int = 500
 
 const SCROLL_UPDATE: float = 0.5
 
