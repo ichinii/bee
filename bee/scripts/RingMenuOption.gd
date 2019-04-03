@@ -5,25 +5,23 @@ enum Option {
 	SomeOption
 }
 
-var producer = null
+const bee_texture = preload("res://res/bee.png")
+
+var producer: Object = null
 var option = Option.NoneOption
 
-func _ready():
-	pass
-
-func init(producer, pos, option):
-	# print("init RingMenuOption with option = ", option)
+func init(producer: Object, pos: Vector2, option):
 	self.producer = producer
-	self.option = option
 	self.position = pos
+	self.option = option
 	_init_sprite()
 	_init_area()
 
 func _init_sprite():
 	var sprite = Sprite.new()
-	sprite.texture = preload("res://res/bee.png")
+	sprite.texture = bee_texture
 	sprite.position = self.position
-	sprite.scale = Vector2(0.1, 0.1)
+	sprite.scale = Vector2(1, 1)
 	add_child(sprite)
 
 func _init_area():
@@ -31,3 +29,4 @@ func _init_area():
 	area.position = position
 	area.scale = Vector2(1, 1)
 	add_child(area)
+

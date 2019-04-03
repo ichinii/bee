@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Bee.gd" type="Script" id=1]
-[ext_resource path="res://res/bee.png" type="Texture" id=2]
+[ext_resource path="res://res/bee3.png" type="Texture" id=2]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( 0.0627747, -28.4359, 6.72011, -26.7716, 10.0488, -22.056, 6.9975, -17.3404, 2.83665, -15.676, 11.7131, 13.7272, 0.617538, 26.2097, -11.5876, 14.282, -2.98851, -15.3986, -7.14935, -17.8951, -9.36845, -21.7786, -7.14935, -26.4942 )
 
 [node name="Bee" type="Node2D"]
 script = ExtResource( 1 )
@@ -9,4 +12,7 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 2 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 1 )
 
