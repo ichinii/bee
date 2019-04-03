@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/BeeHive.gd" type="Script" id=1]
 [ext_resource path="res://res/hive2_open.png" type="Texture" id=2]
 [ext_resource path="res://res/hive2.png" type="Texture" id=3]
 [ext_resource path="res://scripts/CombPlaceArea.gd" type="Script" id=4]
+[ext_resource path="res://res/light.png" type="Texture" id=5]
 
 [node name="BeeHive" type="Node2D"]
 script = ExtResource( 1 )
@@ -33,7 +34,6 @@ polygon = PoolVector2Array( 480.242, -637.475, 1401.48, -637.295, 1405.36, -1176
 position = Vector2( 846.408, 727.931 )
 
 [node name="BeeCombPlaceArea" type="Area2D" parent="."]
-editor/display_folded = true
 script = ExtResource( 4 )
 
 [node name="PlaceShape" type="CollisionPolygon2D" parent="BeeCombPlaceArea"]
@@ -42,5 +42,11 @@ polygon = PoolVector2Array( 213.669, 909.904, 206.494, 1254.3, 605.481, 1254.11,
 
 [node name="StartingPosition" type="Position2D" parent="BeeCombPlaceArea"]
 position = Vector2( 249.955, 1206.71 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 543.088, 590.398 )
+texture = ExtResource( 5 )
+texture_scale = 3.0
+shadow_enabled = true
 
 [connection signal="tween_completed" from="TransitionTween" to="." method="_on_TransitionTween_tween_completed"]

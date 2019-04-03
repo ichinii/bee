@@ -16,6 +16,3 @@ offset = Vector2( 540, 960 )
 
 [node name="BeeController" parent="." instance=ExtResource( 4 )]
 
-[connection signal="scrolled" from="Camera2D" to="UiController" method="_on_Camera2D_scrolled"]
-[connection signal="zoomed" from="Camera2D" to="UiController" method="_on_Camera2D_zoomed"]
-[connection signal="gui_input" from="UiController" to="UiController" method="_on_InputManager_gui_input"]
