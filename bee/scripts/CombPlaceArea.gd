@@ -2,13 +2,6 @@ extends Area2D
 # comblicated
 # comb post
 
-""" properties for intersect_point """
-const max_results: int = 4
-const exclude: Array = []
-const layer_mask: int = 0x7FFFFFFF
-const collide_with_bodies: bool = true
-const collide_with_areas: bool = true
-
 export(Vector2) var comb_scale = Vector2(0.25, 0.25)
 const comb_scene = preload("res://scenes/Comb.tscn")
 const comb_script = preload("res://scripts/Comb.gd")
@@ -76,12 +69,7 @@ func get_neighbors(coord: Vector2) -> Array:
 
 func is_comb_placeable(coord: Vector2) -> bool:
 	var pos = coord_to_pos(coord)
-	
-	var arr = get_world_2d().get_direct_space_state().intersect_point(pos, max_results, exclude, layer_mask, collide_with_bodies, collide_with_areas)
-	for a in arr:
-		if a.collider.name == name:
-			return true
-	return false
+	return IntersectionHelper.intersect_point(pos, name)
 
 func coord_to_pos(coord: Vector2) -> Vector2:
 	return coord * comb_size + $StartingPosition.position

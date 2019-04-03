@@ -1,4 +1,5 @@
 extends CanvasLayer
+const TriggerType = Trigger.TriggerType
 
 const ring_menu_scene = preload("res://scenes/RingMenu.tscn")
 onready var camera2d: Camera2D = get_node("/root/Main/Camera2D")
@@ -13,11 +14,18 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton \
-			and event.button_index == BUTTON_LEFT \
-			and !event.pressed \
-			and !camera_moved:
+		and event.button_index == BUTTON_LEFT \
+		and !event.pressed:
+			closeActiveMenu()
+
+func element_pressed(event: InputEvent, trigger_type) -> void:
+	if !camera_moved:
 		if !closeActiveMenu():
-			createRingMenu(self, event.position, [0, 0, 0, 0, 0, 0])
+			match trigger_type:
+				TriggerType.COMB:
+					createRingMenu(self, event.position, [0, 0, 0, 0, 0, 0])
+				TriggerType.OPTION:
+					print("option") # TODO @bruno start here
 	camera_moved = false
 
 func closeActiveMenu() -> bool:
@@ -32,7 +40,7 @@ func createRingMenu(producer: Object, pos: Vector2, options: Array) -> void:
 	activeMenu = ring_menu
 	ring_menu.position = pos
 	add_child(ring_menu)
-	ring_menu.init(producer, options)
+	ring_menu.setup(producer, options)
 
 func _on_Camera2D_scrolled() -> void:
 	closeActiveMenu()
