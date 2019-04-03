@@ -4,9 +4,9 @@ enum BeeState { IDLE, COLLECT_NECTAR }
 
 const NECTAR_POINT = Vector2(550, 480)
 const COMB_POINT = Vector2(260, 1200)
-const BEE_SPEED = 1
+const BEE_SPEED = 4
 
-var task_list = []
+var current_task = null
 
 class Task:
 	func finished():
@@ -44,31 +44,21 @@ class CollectNectarTask extends Task:
 				has_nectar = true
 
 func _process(delta):
-	while not task_list.empty():
-		var elem = task_list[0]
-		if elem.finished():
-			task_list.remove(elem)
-		else:
-			break
-
 	# execute first task
-	if task_list.empty():
+	if current_task == null:
 		_do_idle()
 	else:
-		task_list[0].tick_bee(self)
+		current_task.tick_bee(self)
 
 func idle():
-	task_list.clear()
+	current_task = null
 
-func collect_nectar():
-	task_list.push_front(CollectNectarTask.new(NECTAR_POINT, COMB_POINT))
-	
+func is_idling():
+	return current_task == null
+
 func _do_idle():
 	self.position.x += rand_range(-1, 1)
 	self.position.y += rand_range(-1, 1)
 
-func _do_collect_nectar():
-	pass
-
-func is_idling():
-	return task_list.empty()
+func collect_nectar():
+	current_task = CollectNectarTask.new(NECTAR_POINT, COMB_POINT)
