@@ -12,7 +12,7 @@ func _generate_bee_start_position():
 
 func _ready():
 	randomize()
-	for i in range(NUM_START_BEES):
+	for _i in range(NUM_START_BEES):
 		var bee = bee_scene.instance()
 		bee.position = _generate_bee_start_position()
 		bees.append(bee)

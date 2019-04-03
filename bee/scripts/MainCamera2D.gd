@@ -143,7 +143,7 @@ func _scroll_back():
 		if scroll_position.y < MAX_Y_SCROLL:
 			scroll_position.y = MAX_Y_SCROLL
 
-func _process(delta):
+func _process(_delta):
 	if not _is_zooming():
 		_zoom_back()
 

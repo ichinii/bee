@@ -9,12 +9,24 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Task",
+"class": "CollectNectarTask",
+"language": "GDScript",
+"path": "res://scripts/tasks/CollectNectar.gd"
+}, {
+"base": "Node",
+"class": "Task",
+"language": "GDScript",
+"path": "res://scripts/tasks/Task.gd"
+}, {
 "base": "Area2D",
 "class": "Trigger",
 "language": "GDScript",
 "path": "res://scripts/Trigger.gd"
 } ]
 _global_script_class_icons={
+"CollectNectarTask": "",
+"Task": "",
 "Trigger": ""
 }
 
