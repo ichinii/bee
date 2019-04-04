@@ -10,7 +10,7 @@
 [node name="Camera2D" parent="." instance=ExtResource( 1 )]
 offset = Vector2( 540, 960 )
 
-[node name="UiController" parent="." instance=ExtResource( 2 )]
+[node name="UIController" parent="." instance=ExtResource( 2 )]
 
 [node name="BeeHive" parent="." instance=ExtResource( 3 )]
 

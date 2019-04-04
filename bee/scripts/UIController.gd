@@ -19,15 +19,17 @@ func _input(event: InputEvent) -> void:
 		and !event.pressed:
 			closeActiveMenu()
 
-func element_pressed(event: InputEvent, trigger_type) -> void:
+func trigger_pressed(event: InputEvent, trigger_type, option_id: int = -1) -> void:
 	if !camera_moved:
 		if !closeActiveMenu():
 			match trigger_type:
 				TriggerType.COMB:
-					createRingMenu(self, event.position, [0, 0, 0, 0, 0, 0])
+					createRingMenu(self, event.position, [0, 1, 2, 3, 4, 5])
 				TriggerType.OPTION:
 					bee_controller.order_collect_nectar(1)
+					print(option_id)
 	camera_moved = false
+	
 
 func closeActiveMenu() -> bool:
 	if activeMenu:
@@ -42,7 +44,7 @@ func createRingMenu(producer: Object, pos: Vector2, options: Array) -> void:
 	ring_menu.position = pos
 	add_child(ring_menu)
 	ring_menu.setup(producer, options)
-
+	
 func _on_Camera2D_scrolled() -> void:
 	closeActiveMenu()
 	camera_moved = true

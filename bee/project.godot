@@ -38,7 +38,7 @@ config/icon="res://res/icon.png"
 
 [autoload]
 
-InputManager="*res://scripts/InputManager.gd"
+UIController="*res://scripts/UIController.gd"
 IntersectionHelper="*res://scripts/Helper/IntersectionHelper.gd"
 
 [display]
