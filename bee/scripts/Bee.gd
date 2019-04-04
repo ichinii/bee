@@ -37,6 +37,7 @@ func fade_out():
 									1,
 									Tween.TRANS_LINEAR,
 									Tween.EASE_IN)
+	$LightOccluder2D.light_mask = 0
 	$FadeTween.interpolate_property(self,
 									"position",
 									self.position,
@@ -54,6 +55,7 @@ func fade_in():
 									1,
 									Tween.TRANS_LINEAR,
 									Tween.EASE_IN)
+	$LightOccluder2D.light_mask = 1
 	$FadeTween.interpolate_property(self,
 									"position",
 									self.position,
