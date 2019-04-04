@@ -2,11 +2,11 @@ extends Node2D
 
 const NECTAR_POINT = Vector2(550, 480)
 const COMB_POINT = Vector2(260, 1200)
-const NECTAR_COLLECT_TIMER = 160
+const NECTAR_COLLECT_TIMER = 2
 
 var current_task = null
 
-func _process(_delta):
+func _process(delta):
 	# execute first task
 	if current_task == null:
 		_do_idle()
@@ -14,7 +14,7 @@ func _process(_delta):
 		if current_task.finished():
 			current_task = null
 		else:
-			current_task.tick_bee(self)
+			current_task.tick_bee(self, delta)
 
 func idle():
 	current_task = null
