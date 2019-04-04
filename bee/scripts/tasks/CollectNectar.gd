@@ -4,7 +4,7 @@ class_name CollectNectarTask
 
 const BEE_SPEED = 3
 
-enum BeeState { IN_HAS_NECTAR, IN_NO_NECTAR, OUT }
+enum BeeState { IN_HAS_NECTAR, IN_NO_NECTAR, OUT, FINISHED }
 
 var nectar_point
 var comb_point
@@ -18,7 +18,7 @@ func _init(n_point, c_point, ocm):
 	self.out_counter_max = ocm
 
 func finished():
-	return false
+	return bee_state == BeeState.FINISHED
 
 func tick_bee(bee):
 	if bee_state == BeeState.IN_HAS_NECTAR:
@@ -27,7 +27,7 @@ func tick_bee(bee):
 		to_comb = to_comb.clamped(BEE_SPEED)
 		bee.position += to_comb
 		if diff < 1:
-			bee_state = BeeState.IN_NO_NECTAR
+			bee_state = BeeState.FINISHED
 	elif bee_state == BeeState.IN_NO_NECTAR:
 		var to_nectar = self.nectar_point - bee.position
 		var diff = to_nectar.length()

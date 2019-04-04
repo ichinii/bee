@@ -21,9 +21,6 @@ func set_evolution_state(new_val: int) -> void:
 	if $AnimatedSprite.frame == evolution_states -1:
 		emit_signal("comb_evolution_finished")
 		stop_evolution()
-		
-		var bee_controller = get_node("/root/Main/BeeController")
-		bee_controller.order_collect_nectar(1)
 
 func increment_evolution_state() -> void:
 	set_evolution_state($AnimatedSprite.frame + 1)

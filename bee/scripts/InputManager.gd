@@ -1,8 +1,9 @@
 extends CanvasLayer
-const TriggerType = Trigger.TriggerType
+var TriggerType = Trigger.TriggerType
 
 const ring_menu_scene = preload("res://scenes/RingMenu.tscn")
 onready var camera2d: Camera2D = get_node("/root/Main/Camera2D")
+onready var bee_controller = get_node("/root/Main/BeeController")
 
 var activeMenu: Node = null
 var camera_moved: bool = false
@@ -25,7 +26,7 @@ func element_pressed(event: InputEvent, trigger_type) -> void:
 				TriggerType.COMB:
 					createRingMenu(self, event.position, [0, 0, 0, 0, 0, 0])
 				TriggerType.OPTION:
-					print("option") # TODO @bruno start here
+					bee_controller.order_collect_nectar(1)
 	camera_moved = false
 
 func closeActiveMenu() -> bool:
