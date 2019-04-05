@@ -2,7 +2,6 @@
 
 [ext_resource path="res://scripts/UIController.gd" type="Script" id=1]
 
-
 [node name="UiController" type="CanvasLayer"]
 script = ExtResource( 1 )
 

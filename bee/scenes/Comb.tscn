@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/Comb.gd" type="Script" id=1]
 [ext_resource path="res://res/comb2_cell_bee1.png" type="Texture" id=2]
@@ -14,9 +14,6 @@
 [ext_resource path="res://res/comb2_cell_honey5.png" type="Texture" id=12]
 [ext_resource path="res://res/comb2_cell_honey6.png" type="Texture" id=13]
 [ext_resource path="res://scenes/Trigger.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scripts/Trigger.gd" type="Script" id=15]
-
-
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -44,7 +41,6 @@ animation = "honey"
 [node name="EvolutionTimer" type="Timer" parent="."]
 
 [node name="Trigger" parent="." instance=ExtResource( 14 )]
-script = ExtResource( 15 )
 
 [node name="CollisionShape2D" parent="Trigger" index="0"]
 shape = SubResource( 2 )

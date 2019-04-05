@@ -1,7 +1,7 @@
 extends Node2D
 
-enum CombType { BEE_COMB, HONEY_COMB }
-var comb_type = CombType.BEE_COMB # CombType
+enum CombType { BEE, HONEY }
+var comb_type = CombType.BEE # CombType
 var evolution_states: int
 
 signal comb_evolution_finished
@@ -30,9 +30,9 @@ func get_evolution_state() -> int:
 
 func _ready() -> void:
 	match comb_type:
-		CombType.BEE_COMB:
+		CombType.BEE:
 			$AnimatedSprite.animation = "bee"
-		CombType.HONEY_COMB:
+		CombType.HONEY:
 			$AnimatedSprite.animation = "honey"
 	
 	evolution_states = $AnimatedSprite.frames.get_frame_count($AnimatedSprite.animation)
