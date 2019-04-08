@@ -6,7 +6,6 @@ enum TriggerType { COMB, OPTION, BEE }
 
 export(TriggerType) var _trigger_type
 
-#		and event.button_index == BUTTON_LEFT \
 func _on_Trigger_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is DeviceHelper.get_touch_event_type() and !event.pressed:
 		match _trigger_type:
