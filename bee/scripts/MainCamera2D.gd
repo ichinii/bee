@@ -9,6 +9,7 @@ const MAX_Y_SCROLL: int = 1270
 const MIN_Y_SCROLL: int = 500
 
 const SCROLL_UPDATE: float = 0.5
+const MIN_SCROLL_THRESHOLD: int = 50
 
 var mobile: bool = false
 var zoom_value: float = 1.0
@@ -54,8 +55,8 @@ func _scroll(event):
 			self.scroll_position -= event.relative * self.zoom_value * zfactor
 
 	var view_scroll = _scroll_smoother(self.scroll_position)
-	if self.offset != view_scroll:
-		self.offset = view_scroll
+	var new_offset = _apply_scroll_threshold(view_scroll)
+	if self.offset != new_offset:
 		emit_signal("scrolled")
 
 func _zoom(event):
@@ -149,15 +150,20 @@ func _process(_delta):
 
 	if not _is_scrolling():
 		_scroll_back()
-		
+
 	var view_zoom = _zoom_smoother(self.zoom_value)
 	self.zoom.x = view_zoom
 	self.zoom.y = view_zoom
 
 	var view_scroll = _scroll_smoother(self.scroll_position)
-	self.offset = view_scroll
+	self.offset = _apply_scroll_threshold(view_scroll)
 
-func _scroll_smoother(s):
+func _apply_scroll_threshold(scroll: Vector2):
+	if self.offset.distance_squared_to(scroll) < MIN_SCROLL_THRESHOLD * self.zoom_value:
+		return self.offset
+	return scroll
+
+func _scroll_smoother(s: Vector2):
 	var r = s
 	if s.x > MAX_X_SCROLL:
 		r.x = MAX_X_SCROLL + _smooth_func(s.x-MAX_X_SCROLL, 5*(zoom_value+0.5))
@@ -168,10 +174,9 @@ func _scroll_smoother(s):
 		r.y = MAX_Y_SCROLL + _smooth_func(s.y-MAX_Y_SCROLL, 5*(zoom_value+0.5))
 	elif s.y < MIN_Y_SCROLL:
 		r.y = MIN_Y_SCROLL - _smooth_func(MIN_Y_SCROLL-s.y, 5*(zoom_value+0.5))
-
 	return r
 
-func _zoom_smoother(z):
+func _zoom_smoother(z: float):
 	var r = z
 	if z > MAX_ZOOM:
 		r = MAX_ZOOM + _smooth_func(z-MAX_ZOOM, 0.3)
@@ -179,5 +184,5 @@ func _zoom_smoother(z):
 		r = MIN_ZOOM - _smooth_func(MIN_ZOOM-z, 0.015)
 	return r
 
-func _smooth_func(x, h):
+func _smooth_func(x: float, h: float):
 	return x*h/(x+h)

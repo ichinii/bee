@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/BeeHive.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/BeeController.tscn" type="PackedScene" id=4]
 
-
 [node name="Main" type="Node2D"]
 
 [node name="Camera2D" parent="." instance=ExtResource( 1 )]

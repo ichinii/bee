@@ -15,11 +15,10 @@ func _ready() -> void:
 	assert _camera2d != null
 	_camera2d.connect("scrolled", self, "_on_Camera2D_scrolled")
 	_camera2d.connect("zoomed", self, "_on_Camera2D_zoomed")
-
+	
+#and event.button_index == BUTTON_LEFT \
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton \
-		and event.button_index == BUTTON_LEFT \
-		and !event.pressed:
+	if event is DeviceHelper.get_touch_event_type() and !event.pressed:
 			_close_active_menu()
 
 func select_comb(event: InputEvent, producer: Object, comb_type: int) -> void:
@@ -60,9 +59,9 @@ func _create_ring_menu(producer: Object, pos: Vector2, options: Array) -> void:
 	ring_menu.setup(producer, options)
 	
 func _on_Camera2D_scrolled() -> void:
-	_close_active_menu()
-	_camera_moved = true
+	if _close_active_menu():
+		_camera_moved = true
 
 func _on_Camera2D_zoomed() -> void:
-	_close_active_menu()
-	_camera_moved = true
+	if _close_active_menu():
+		_camera_moved = true
