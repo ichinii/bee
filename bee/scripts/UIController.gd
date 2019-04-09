@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+class_name UIController
+
 # Enums
 const CombType = preload("res://scripts/Comb.gd").CombType
 const OptionType = preload("res://scripts/MenuOption.gd").OptionType
@@ -11,11 +13,14 @@ onready var _bee_controller = get_node("/root/Main/BeeController")
 var _activeMenu: Node = null
 var _camera_moved: bool = false
 
+func _init() -> void:
+	SingletonManager.ui_controller = self
+
 func _ready() -> void:
 	assert _camera2d != null
-	_camera2d.connect("scrolled", self, "_on_Camera2D_scrolled")
-	_camera2d.connect("zoomed", self, "_on_Camera2D_zoomed")
-	
+	assert _camera2d.connect("scrolled", self, "_on_Camera2D_scrolled") == OK
+	assert _camera2d.connect("zoomed", self, "_on_Camera2D_zoomed") == OK
+
 #and event.button_index == BUTTON_LEFT \
 func _input(event: InputEvent) -> void:
 	if event is DeviceHelper.get_touch_event_type() and !event.pressed:

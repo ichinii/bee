@@ -3,10 +3,10 @@ extends Sprite
 const menu_option_scene = preload("res://scenes/MenuOption.tscn")
 
 func _ready() -> void:
-	$TransitionTween.interpolate_property(self, "scale", Vector2(0,0),
-			self.scale, 0.75, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
-	$TransitionTween.interpolate_property(self, "rotation_degrees", 90,
-			self.rotation_degrees, 0.75, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	$TransitionTween.interpolate_property(self, "scale", Vector2(0.1,0.1),
+			self.scale, 1.25, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	$TransitionTween.interpolate_property(self, "rotation_degrees", 20,
+			self.rotation_degrees, 1.25, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	$TransitionTween.start()
 	
 func setup(producer: Object, options: Array) -> void:

@@ -6,6 +6,24 @@ var evolution_states: int
 
 signal comb_evolution_finished
 
+func _ready() -> void:
+	match comb_type:
+		CombType.BEE:
+			$AnimatedSprite.animation = "bee"
+		CombType.HONEY:
+			$AnimatedSprite.animation = "honey"
+	
+	_update_comb_count()
+	evolution_states = $AnimatedSprite.frames.get_frame_count($AnimatedSprite.animation)
+	start_evolution()
+
+func _update_comb_count() -> void:
+	match comb_type:
+		CombType.BEE:
+			SingletonManager.player_stats.increase_bee_comb_count()
+		CombType.HONEY:
+			SingletonManager.player_stats.increase_honey_comb_count()
+
 func start_evolution() -> void:
 	$EvolutionTimer.start()
 	
@@ -27,16 +45,6 @@ func increment_evolution_state() -> void:
 
 func get_evolution_state() -> int:
     return $AnimatedSprite.frame
-
-func _ready() -> void:
-	match comb_type:
-		CombType.BEE:
-			$AnimatedSprite.animation = "bee"
-		CombType.HONEY:
-			$AnimatedSprite.animation = "honey"
-	
-	evolution_states = $AnimatedSprite.frames.get_frame_count($AnimatedSprite.animation)
-	start_evolution()
 
 func _on_EvolutionTimer_timeout() -> void:
 	if $AnimatedSprite.frame < evolution_states:

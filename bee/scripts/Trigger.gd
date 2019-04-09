@@ -10,8 +10,8 @@ func _on_Trigger_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 	if event is DeviceHelper.get_touch_event_type() and !event.pressed:
 		match _trigger_type:
 			TriggerType.COMB:
-				UIController.select_comb(event, get_parent(), get_parent().comb_type)
+				SingletonManager.ui_controller.select_comb(event, get_parent(), get_parent().comb_type)
 			TriggerType.OPTION:
-				UIController.select_menu_option(event, get_parent().producer, get_parent().option_type)
+				SingletonManager.ui_controller.select_menu_option(event, get_parent().producer, get_parent().option_type)
 			TriggerType.BEE:
-				UIController.select_bee(event)
+				SingletonManager.ui_controller.select_bee(event)

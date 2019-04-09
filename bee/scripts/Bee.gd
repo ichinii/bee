@@ -6,6 +6,12 @@ const NECTAR_COLLECT_TIMER = 2
 
 var current_task = null
 
+func _ready() -> void:
+	_update_bee_count()
+	
+func _update_bee_count() -> void:
+	SingletonManager.player_stats.increase_bee_count()
+
 func _process(delta):
 	# execute first task
 	if current_task == null:
