@@ -1,12 +1,17 @@
 extends Camera2D
 
 const MIN_ZOOM: float = 0.1
-const MAX_ZOOM: float = 2.0
+const MAX_ZOOM: float = 1.0
 
-const MAX_X_SCROLL: int = 900
-const MIN_X_SCROLL: int = 170
-const MAX_Y_SCROLL: int = 1270
-const MIN_Y_SCROLL: int = 500
+const MAX_X_SCROLL: int = 960
+const MIN_X_SCROLL: int = 110
+const MAX_Y_SCROLL: int = 1530
+const MIN_Y_SCROLL: int = 710
+
+const MID_X_SCROLL: int = (MAX_X_SCROLL + MIN_X_SCROLL) / 2
+const MID_Y_SCROLL: int = (MAX_Y_SCROLL + MIN_Y_SCROLL) / 2
+
+const SCROLL_SOFTNESS = 7
 
 const SCROLL_UPDATE: float = 0.5
 const MIN_SCROLL_THRESHOLD: int = 50
@@ -125,24 +130,53 @@ func _zoom_back():
 		if zoom_value < MAX_ZOOM:
 			zoom_value = MAX_ZOOM
 
-func _scroll_back():
-	if scroll_position.x < MIN_X_SCROLL:
-		scroll_position.x += (MIN_X_SCROLL-scroll_position.x + 0.3)*SCROLL_UPDATE
-		if scroll_position.x > MIN_X_SCROLL:
-			scroll_position.x = MIN_X_SCROLL
-	elif scroll_position.x > MAX_X_SCROLL:
-		scroll_position.x -= (scroll_position.x-MAX_X_SCROLL + 0.3)*SCROLL_UPDATE
-		if scroll_position.x < MAX_X_SCROLL:
-			scroll_position.x = MAX_X_SCROLL
+func _get_min_x_scroll():
+	var capped_zoom_value = zoom_value
+	if capped_zoom_value > MAX_ZOOM:
+		capped_zoom_value = MAX_ZOOM
+	return (capped_zoom_value * MID_X_SCROLL) + ((1-capped_zoom_value) * MIN_X_SCROLL)
 
-	if scroll_position.y < MIN_Y_SCROLL:
-		scroll_position.y += (MIN_Y_SCROLL-scroll_position.y + 0.3)*SCROLL_UPDATE
-		if scroll_position.y > MIN_Y_SCROLL:
-			scroll_position.y = MIN_Y_SCROLL
-	elif scroll_position.y > MAX_Y_SCROLL:
-		scroll_position.y -= (scroll_position.y-MAX_Y_SCROLL + 0.3)*SCROLL_UPDATE
-		if scroll_position.y < MAX_Y_SCROLL:
-			scroll_position.y = MAX_Y_SCROLL
+func _get_max_x_scroll():
+	var capped_zoom_value = zoom_value
+	if capped_zoom_value > MAX_ZOOM:
+		capped_zoom_value = MAX_ZOOM
+	return (capped_zoom_value * MID_X_SCROLL) + ((1-capped_zoom_value) * MAX_X_SCROLL)
+
+func _get_min_y_scroll():
+	var capped_zoom_value = zoom_value
+	if capped_zoom_value > MAX_ZOOM:
+		capped_zoom_value = MAX_ZOOM
+	return (capped_zoom_value * MID_Y_SCROLL) + ((1-capped_zoom_value) * MIN_Y_SCROLL)
+
+func _get_max_y_scroll():
+	var capped_zoom_value = zoom_value
+	if capped_zoom_value > MAX_ZOOM:
+		capped_zoom_value = MAX_ZOOM
+	return (capped_zoom_value * MID_Y_SCROLL) + ((1-capped_zoom_value) * MAX_Y_SCROLL)
+	
+func _scroll_back():
+	var min_x_scroll = _get_min_x_scroll()
+	var max_x_scroll = _get_max_x_scroll()
+	var min_y_scroll = _get_min_y_scroll()
+	var max_y_scroll = _get_max_y_scroll()
+	
+	if scroll_position.x < min_x_scroll:
+		scroll_position.x += (min_x_scroll-scroll_position.x + 0.3)*SCROLL_UPDATE
+		if scroll_position.x > min_x_scroll:
+			scroll_position.x = min_x_scroll
+	elif scroll_position.x > max_x_scroll:
+		scroll_position.x -= (scroll_position.x-max_x_scroll + 0.3)*SCROLL_UPDATE
+		if scroll_position.x < max_x_scroll:
+			scroll_position.x = max_x_scroll
+
+	if scroll_position.y < min_y_scroll:
+		scroll_position.y += (min_y_scroll-scroll_position.y + 0.3)*SCROLL_UPDATE
+		if scroll_position.y > min_y_scroll:
+			scroll_position.y = min_y_scroll
+	elif scroll_position.y > max_y_scroll:
+		scroll_position.y -= (scroll_position.y-max_y_scroll + 0.3)*SCROLL_UPDATE
+		if scroll_position.y < max_y_scroll:
+			scroll_position.y = max_y_scroll
 
 func _process(_delta):
 	if not _is_zooming():
@@ -164,16 +198,21 @@ func _apply_scroll_threshold(scroll: Vector2):
 	return scroll
 
 func _scroll_smoother(s: Vector2):
+	var max_x_scroll = _get_max_x_scroll()
+	var min_x_scroll = _get_min_x_scroll()
+	var max_y_scroll = _get_max_y_scroll()
+	var min_y_scroll = _get_min_y_scroll()
+	
 	var r = s
-	if s.x > MAX_X_SCROLL:
-		r.x = MAX_X_SCROLL + _smooth_func(s.x-MAX_X_SCROLL, 5*(zoom_value+0.5))
-	elif s.x < MIN_X_SCROLL:
-		r.x = MIN_X_SCROLL - _smooth_func(MIN_X_SCROLL-s.x, 5*(zoom_value+0.5))
+	if s.x > max_x_scroll:
+		r.x = max_x_scroll + _smooth_func(s.x-max_x_scroll, SCROLL_SOFTNESS*(zoom_value+0.5))
+	elif s.x < min_x_scroll:
+		r.x = min_x_scroll - _smooth_func(min_x_scroll-s.x, SCROLL_SOFTNESS*(zoom_value+0.5))
 
-	if s.y > MAX_Y_SCROLL:
-		r.y = MAX_Y_SCROLL + _smooth_func(s.y-MAX_Y_SCROLL, 5*(zoom_value+0.5))
-	elif s.y < MIN_Y_SCROLL:
-		r.y = MIN_Y_SCROLL - _smooth_func(MIN_Y_SCROLL-s.y, 5*(zoom_value+0.5))
+	if s.y > max_y_scroll:
+		r.y = max_y_scroll + _smooth_func(s.y-max_y_scroll, SCROLL_SOFTNESS*(zoom_value+0.5))
+	elif s.y < min_y_scroll:
+		r.y = min_y_scroll - _smooth_func(min_y_scroll-s.y, SCROLL_SOFTNESS*(zoom_value+0.5))
 	return r
 
 func _zoom_smoother(z: float):

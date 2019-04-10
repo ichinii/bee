@@ -46,6 +46,7 @@ polygon = PoolVector2Array( 213.669, 909.904, 206.494, 1254.3, 605.481, 1254.11,
 position = Vector2( 249.955, 1206.71 )
 
 [node name="Light2D" type="Light2D" parent="."]
+visible = false
 position = Vector2( 543.088, 472.398 )
 texture = ExtResource( 5 )
 texture_scale = 3.0
