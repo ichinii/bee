@@ -1,7 +1,7 @@
 extends Node2D
 
-const NECTAR_POINT = Vector2(550, 480)
-const COMB_POINT = Vector2(260, 1200)
+const NECTAR_POINT = Vector2(545, 716)
+const COMB_POINT = Vector2(247, 1435)
 const NECTAR_COLLECT_TIMER = 2
 
 var current_task = null

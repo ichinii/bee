@@ -2,7 +2,7 @@ extends Node2D
 
 const bee_scene = preload("res://scenes/Bee.tscn")
 const NUM_START_BEES = 3
-const BEE_DEFAULT_START_POSITION = Vector2(530, 600)
+const BEE_DEFAULT_START_POSITION = Vector2(550, 953)
 
 var bees = []
 

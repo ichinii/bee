@@ -11,7 +11,8 @@ const MIN_Y_SCROLL: int = 710
 const MID_X_SCROLL: int = (MAX_X_SCROLL + MIN_X_SCROLL) / 2
 const MID_Y_SCROLL: int = (MAX_Y_SCROLL + MIN_Y_SCROLL) / 2
 
-const SCROLL_SOFTNESS = 7
+const SCROLL_SOFTNESS = 20
+const ZOOM_SOFTNESS = 0.3
 
 const SCROLL_UPDATE: float = 0.5
 const MIN_SCROLL_THRESHOLD: int = 50
@@ -218,9 +219,9 @@ func _scroll_smoother(s: Vector2):
 func _zoom_smoother(z: float):
 	var r = z
 	if z > MAX_ZOOM:
-		r = MAX_ZOOM + _smooth_func(z-MAX_ZOOM, 0.3)
+		r = MAX_ZOOM + _smooth_func(z-MAX_ZOOM, ZOOM_SOFTNESS*0.3)
 	elif z < MIN_ZOOM:
-		r = MIN_ZOOM - _smooth_func(MIN_ZOOM-z, 0.015)
+		r = MIN_ZOOM - _smooth_func(MIN_ZOOM-z, ZOOM_SOFTNESS*0.015)
 	return r
 
 func _smooth_func(x: float, h: float):
